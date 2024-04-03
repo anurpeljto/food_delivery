@@ -33,13 +33,13 @@ export const categories = [
 
 export const featuredRestaurants = {
     id: 1,
-    title: 'Hot & Spicy',
-    description: 'crispy fried chicken',
+    title: 'Pizza',
+    description: 'For all your pizza needs',
     restaurants : [
         {
             id: 1,
             name: 'Montana',
-            image: require('../assets/images/categories/icons8-pizza-96.png'),
+            image: require('../assets/images/restaurants/montana.jpeg'),
             description: 'Good pizza, decent price',
             lng: 43.84970815254865,
             lat: 18.36629368327564,
@@ -74,13 +74,12 @@ export const featuredRestaurants = {
         },
         {
             id: 2,
-            name: 'Montana',
-            image: require('../assets/images/categories/icons8-pizza-96.png'),
-            description: 'Good pizza, decent price',
+            name: 'Montana low review',
+            image: require('../assets/images/restaurants/montana.jpeg'),
             lng: 43.84970815254865,
             lat: 18.36629368327564,
             reviews: 653,
-            stars: 3.2,
+            stars: 2.5,
             address: 'Bulevar Meše Selimovića 2c',
             category: 'Pizza',
             dishes: [
@@ -111,8 +110,7 @@ export const featuredRestaurants = {
         {
             id: 3,
             name: 'Montana',
-            image: require('../assets/images/categories/icons8-pizza-96.png'),
-            description: 'Good pizza, decent price',
+            image: require('../assets/images/restaurants/montana.jpeg'),
             lng: 43.84970815254865,
             lat: 18.36629368327564,
             reviews: 653,
