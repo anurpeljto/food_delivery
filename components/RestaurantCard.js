@@ -12,7 +12,7 @@ export default function RestaurantCard({item}) {
     onPress={() => navigation.navigate('Restaurant', {...item})}>
         <View className="mr-6 bg-white rounded-3xl shadow-lg"
         style={{
-            shadowColor: "black",
+            shadowColor: "gray",
             shadowRadius: 7
         }}>
             <Image className="h-36 w-64 rounded-t-3xl" source={item.image} />
