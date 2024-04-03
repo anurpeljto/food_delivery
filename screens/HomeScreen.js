@@ -6,6 +6,8 @@ import * as Icon from 'react-native-feather';
 import { StatusBar } from 'expo-status-bar';
 import { ThemeColors } from '../theme';
 import Categories from '../components/Categories';
+import { featuredRestaurants } from '../constants';
+import FeaturedRow from '../components/featuredRow';
 
   
   export default function HomeScreen() {
@@ -33,6 +35,20 @@ import Categories from '../components/Categories';
             }}>
               
               <Categories></Categories>
+
+              <View className="mt-5">
+                {
+                  [featuredRestaurants, featuredRestaurants, featuredRestaurants].map((item, index) => {
+                    return (
+                      <FeaturedRow
+                      key={index}
+                      title={item.title}
+                      restaurants={item.restaurants}
+                      description={item.description}></FeaturedRow>
+                    )
+                  })
+                }
+              </View>
             </ScrollView>
       </SafeAreaView>
     )
