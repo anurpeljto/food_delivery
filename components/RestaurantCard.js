@@ -3,11 +3,13 @@ import React, { useState } from 'react'
 import { Image } from 'react-native';
 import * as Icon from 'react-native-feather';
 import { ThemeColors } from '../theme/index.js';
+import { useNavigation } from '@react-navigation/native';
 
 export default function RestaurantCard({item}) {
-    const [isGood, setGood] = useState(null);
+    const navigation = useNavigation();
   return (
-    <TouchableWithoutFeedback>
+    <TouchableWithoutFeedback
+    onPress={() => navigation.navigate('Restaurant', {...item})}>
         <View className="mr-6 bg-white rounded-3xl shadow-lg"
         style={{
             shadowColor: "black",
