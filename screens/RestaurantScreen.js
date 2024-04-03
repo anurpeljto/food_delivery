@@ -5,6 +5,7 @@ import { ThemeColors } from '../theme';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { Image } from 'react-native';
 import DishRow from '../components/DishRow';
+import Cart from '../components/cart';
 
 export default function RestaurantScreen() {
   const {params} = useRoute();
@@ -13,7 +14,8 @@ export default function RestaurantScreen() {
   // console.log('restaurant: ', item);
   return (
     <View>
-      <ScrollView>
+        <Cart />
+        <ScrollView>
         <View className="relative">
           <Image className="w-full h-72" source={item.image} />
           <TouchableOpacity className="absolute top-14 left-4 bg-gray-50 p-2 rounded-full"
