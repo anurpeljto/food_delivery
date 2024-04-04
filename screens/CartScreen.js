@@ -18,7 +18,7 @@ export default function CartScreen() {
   // SAME TYPE/ORDER ITEMS WILL BE GROUPED: EX. Stuffed crust pizza x2
   const navigation = useNavigation();
   return (
-    <View>
+    <View style={{flex: 1}}>
         <SafeAreaView style={{backgroundColor: ThemeColors.bgColor(1)}}>
 
         <View className="pb-10 flex-row justify-center items-center">
@@ -27,6 +27,7 @@ export default function CartScreen() {
         <TouchableOpacity className="absolute top-14 left-4 bg-gray-50 p-2 rounded-full" onPress={() => navigation.goBack()}>
             <Icon.ArrowLeft strokeWidth="3" stroke={ThemeColors.bgColor(1)} />
           </TouchableOpacity>
+          </SafeAreaView>
 
         <ScrollView className="bg-white flex py-2 w-full h-full">
           <View className="flex py-2 bg-white-700">
@@ -36,24 +37,31 @@ export default function CartScreen() {
             <OrderedCard />
             <OrderedCard />
           </View>
+        </ScrollView>
 
-          <View className="relative bottom-1 w-full z-50 pt-3 bg-white-700">
-        <TouchableOpacity style={{backgroundColor : ThemeColors.bgColor(1)}} className="flex-row justify-between items-center mx-5 rounded-full p-4 py-3 shadow-md">
-            <View className="p-2 px-4 rounded-full" style={{backgroundColor: 'rgba(255,255,255,0.3)'}}>
-                <Text className="font-extrabold text-white text-lg">50</Text> 
-            </View>
+        <View style={{backgroundColor: ThemeColors.bgColor(0.2), position: 'absolute', bottom: 0, left: 0, right: 0}} className="p-6 px-8 rounded-t-3xl space-y-1">
+          <View className="flex-row justify-between">
+            <Text className="text-gray-700 ">Price</Text>
+            <Text className="text-gray-700 ">100 KM</Text>
+          </View>
 
-            <Text className="flex-1 text-center font-extrabold text-white text-lg">
-                Pay now
-            </Text>
+          <View className="flex-row justify-between">
+            <Text className="text-gray-700 ">Fees</Text>
+            <Text className="text-gray-700 ">2 KM</Text>
+          </View>
 
-            <Text className="font-extrabold text-white text-lg">{100}KM</Text>
-        </TouchableOpacity>
+          <View className="flex-row justify-between">
+            <Text className="text-gray-700 text-xl font-extrabold">Total</Text>
+            <Text classname="text-gray-700 text-xl font-extrabold">2 KM</Text>
+          </View>
+
+          <View>
+            <TouchableOpacity style={{backgroundColor: ThemeColors.bgColor(1)}} className="p-3 rounded-full">
+              <Text className="font-bold text-lg text-white text-center">Order now</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
 
     </View>
-        </ScrollView>
-        </SafeAreaView>
-
-        </View>
   )
 }
