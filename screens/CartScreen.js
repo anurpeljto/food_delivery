@@ -11,6 +11,7 @@ import { ScrollView } from 'react-native';
 import Cart from '../components/cart';
 
 export default function CartScreen() {  
+  // forgot to change to branch, adding this comment to be able to pull request
 
   // will make this screen take params later, once a DB or other form of data is implemented
   // will also make cart component use a new variable that will be sent by the function to this screen, per each selected item
