@@ -1,10 +1,14 @@
 import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { ThemeColors } from '../theme';
-import { useNavigation } from '@react-navigation/native';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
 
-export default function Cart() {
-  const navigation = useNavigation();
+interface CartProps {
+  navigation: NavigationProp<any, 'Cart'>;
+}
+
+export default function Cart(props: CartProps) {
+  const {navigation} = props;
   return (
     <View className="absolute bottom-5 w-full z-50">
       <TouchableOpacity
