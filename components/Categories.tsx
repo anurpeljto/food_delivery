@@ -1,5 +1,5 @@
 import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
-import React, { useState } from 'react';
+import React, { useState, createContext, useContext } from 'react';
 import { categories } from '../constants/index';
 import { Image } from 'react-native';
 
@@ -8,6 +8,7 @@ interface Category {
   name: string;
   image: any;
 }
+
 
 interface CategoriesProps {
 }

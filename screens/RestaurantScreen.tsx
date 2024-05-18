@@ -7,6 +7,10 @@ import DishRow from '../components/DishRow';
 import Cart from '../components/cart';
 import { Restaurant } from '../constants';
 import { RouteProp } from '@react-navigation/native';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { setRestaurant } from '../slices/restaurantSlice';
+import { useState } from 'react';
 
 interface RestaurantScreenProps {}
 type RouteParams = {
@@ -20,9 +24,26 @@ export default function RestaurantScreen(props: RestaurantScreenProps) {
   const navigation = useNavigation();
   let item = params.item;
   // console.log('restaurant: ', item);
+  const dispatch = useDispatch();
+  const [totalPrice, setTotalPrice] = useState(0);
+  const [quantity, setQuantity] = useState(0);
+
+  const handleTotalChange = (newTotal: number) => {
+    setTotalPrice(newTotal);
+  }
+
+  const handleTotalQuantityChange = (newQuantity: number) => {
+    setQuantity(newQuantity);
+  }
+
+  useEffect(() => {
+    if(item && item.id){
+      dispatch(setRestaurant({...item}))
+    }
+  }, []);
   return (
     <View>
-      <Cart navigation = {navigation} />
+      <Cart navigation = {navigation} total={totalPrice} quantity={quantity}/>
       <ScrollView>
         <View className="relative">
           <Image className="w-full h-72" source={item.image} />
@@ -56,7 +77,7 @@ export default function RestaurantScreen(props: RestaurantScreenProps) {
         <View className="pb-36 bg-white">
           <Text className="px-5 py-4 text-2xl font-bold">Menu</Text>
           {item.dishes.map((dish: any, index: number) => (
-            <DishRow item={{ ...dish }} key={index} />
+            <DishRow item={{ ...dish }} key={index} onTotalChange={handleTotalChange} onQuantityChange={handleTotalQuantityChange} />
           ))}
         </View>
       </ScrollView>
