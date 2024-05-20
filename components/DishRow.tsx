@@ -20,7 +20,7 @@ export interface DishRowProps {
 }
 
 const DishRow: React.FC<DishRowProps> = ({ item, onTotalChange, onQuantityChange, addToCart, removeFromCart }) => {
-  const [quantity, setQuantity] = useState(1);
+  const [quantity, setQuantity] = useState(0);
 
   const decrementQuantity = () => {
     if(quantity > 1){

@@ -78,7 +78,7 @@ export default function RestaurantScreen(props: RestaurantScreenProps) {
         <View className="pb-36 bg-white">
           <Text className="px-5 py-4 text-2xl font-bold">Menu</Text>
           {item.dishes.map((dish: any, index: number) => (
-            <DishRow item={{ ...dish, quantity: 1 }} key={index} onTotalChange={handleTotalChange} onQuantityChange={handleTotalQuantityChange} addToCart={(item) => dispatch(addToCart(item))} removeFromCart = {(id) => dispatch(removeFromCart({id}))} />
+            <DishRow item={{ ...dish, quantity: 0 }} key={index} onTotalChange={handleTotalChange} onQuantityChange={handleTotalQuantityChange} addToCart={(item) => dispatch(addToCart(item))} removeFromCart = {(id) => dispatch(removeFromCart({id}))} />
           ))}
         </View>
       </ScrollView>
