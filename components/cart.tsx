@@ -4,6 +4,9 @@ import { ThemeColors } from '../theme';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import DishRow from './DishRow';
 import { DishRowProps } from './DishRow';
+import { useSelector } from 'react-redux';
+import { selectCartTotal } from '../slices/cartSlice';
+import { RootState } from '../store/store';
 
 interface CartProps {
   navigation: NavigationProp<any, 'Cart'>;
@@ -12,7 +15,7 @@ interface CartProps {
 }
 
 export default function Cart({navigation, total, quantity}: CartProps) {
-
+  total = useSelector((state: RootState) => selectCartTotal(state));
   return (
     <View className="absolute bottom-5 w-full z-50">
       <TouchableOpacity

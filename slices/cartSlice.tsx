@@ -7,6 +7,7 @@ export interface Item {
     name: string;
     price: number;
     description: string;
+    quantity: number
 }
 
 export interface CartState {
@@ -23,25 +24,19 @@ export const cartSlice = createSlice({
   initialState,
   reducers: {
     addToCart: (state, action: PayloadAction<Item>) => {
-        state.items = [...state.items, action.payload]
-    },
-
-    removeFromCart: (state, action: PayloadAction<{id: number}>) => {
-        let newCart = [...state.items];
-        let itemIndex = state.items.findIndex(item => item.id == action.payload.id);
-        if(itemIndex >= 0){
-            newCart.splice(itemIndex,1);
+        const existingItem = state.items.find(item => item.id === action.payload.id);
+        if (existingItem) {
+          existingItem.quantity += action.payload.quantity;
+        } else {
+          state.items.push(action.payload);
         }
-        else {
-            console.log("Can't remove item that is not added to the cart");
-        }
-
-        state.items = newCart;
-    },
-
-    emptyCart: (state, action) => {
+      },
+      removeFromCart: (state, action: PayloadAction<{id: number}>) => {
+        state.items = state.items.filter(item => item.id !== action.payload.id);
+      },
+      emptyCart: (state) => {
         state.items = [];
-    },
+      },
   },
 })
 
@@ -51,6 +46,6 @@ export const selectCartItems = (state: RootState) => state.cart.items;
 
 export const selectCartItemByID = (state: RootState,id: number) => state.cart.items.filter(item => item.id == id);
 
-export const selectCartTotal = (state: RootState) => state.cart.items.reduce((total, item) => total += item.price, 0);
+export const selectCartTotal = (state: RootState) => state.cart.items.reduce((total, item) => total + item.price * item.quantity, 0);
 
 export default cartSlice.reducer

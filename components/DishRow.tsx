@@ -2,19 +2,24 @@ import React, { useState } from 'react';
 import { View, Text, Image, TouchableOpacity } from 'react-native';
 import { ThemeColors } from '../theme';
 import * as Icon from 'react-native-feather';
-
+import { useDispatch } from 'react-redux';
+import { addToCart } from '../slices/cartSlice';
+import { Item } from '../slices/cartSlice';
 export interface DishRowProps {
   item: {
     name: string;
     description: string;
     price: number;
     image: any; 
+    id: number;
   };
   onTotalChange : (total: number) => void;
   onQuantityChange: (quantity: number) => void;
+  addToCart: (item: Item) => void;
+  removeFromCart: (id: number) => void;
 }
 
-const DishRow: React.FC<DishRowProps> = ({ item, onTotalChange, onQuantityChange }) => {
+const DishRow: React.FC<DishRowProps> = ({ item, onTotalChange, onQuantityChange, addToCart, removeFromCart }) => {
   const [quantity, setQuantity] = useState(1);
 
   const decrementQuantity = () => {
@@ -22,6 +27,12 @@ const DishRow: React.FC<DishRowProps> = ({ item, onTotalChange, onQuantityChange
       setQuantity(quantity-1);
       onTotalChange(item.price * (quantity-1));
       onQuantityChange(quantity - 1);
+      addToCart({...item, quantity: -1});
+    } else {
+      setQuantity(0);
+      onTotalChange(0);
+      onQuantityChange(0);
+      removeFromCart(item.id);
     }
   }
 
@@ -29,6 +40,7 @@ const DishRow: React.FC<DishRowProps> = ({ item, onTotalChange, onQuantityChange
     setQuantity(quantity+1);
     onTotalChange(item.price * (quantity + 1));
     onQuantityChange(quantity + 1);
+    addToCart({...item, quantity: +1});
   }
 
 

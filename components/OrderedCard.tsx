@@ -6,7 +6,7 @@ import { SafeAreaView } from 'react-native';
 import { ScrollView } from 'react-native';
 
 interface OrderedCardProps {
-  item: {id: Number, name: String, price: number, description: string};
+  item: {id: Number, name: String, price: number, description: string, quantity: number};
 }
 
 const OrderedCard: React.FC<OrderedCardProps> = ({item}) => {
@@ -22,7 +22,7 @@ const OrderedCard: React.FC<OrderedCardProps> = ({item}) => {
         </View>
         <View className="flex-row justify-between pl-3 items-center">
             <Text className="text-gray-700 text-lg font-bold">
-                {item.price}
+             {item.quantity} x {item.price} KM 
             </Text>
             
         </View>
