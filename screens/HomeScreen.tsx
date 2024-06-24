@@ -8,13 +8,69 @@ import { ThemeColors } from '../theme';
 import Categories from '../components/Categories';
 import { FeaturedRestaurant, featuredRestaurants } from '../constants';
 import FeaturedRow from '../components/featuredRow';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+import * as Location from 'expo-location';
 
 interface HomeProps {}
 
 export default function HomeScreen(props: HomeProps) {
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState<string>('');
+  const [userLocation, setUserLocation] = useState<string>('');
+
+  useEffect(() => {
+    fetchUserLocation();
+  },[]);
+
+  const fetchUserLocation = async() => {
+    
+    try {
+      let {status} = await Location.requestForegroundPermissionsAsync();
+      if(status !== 'granted'){
+        setUserLocation('Permission to access location was denied');
+        return;
+      }
+
+      let location = await Location.getCurrentPositionAsync({});
+      const {latitude, longitude} = location.coords;  
+
+      const apiKey ='AIzaSyBWfKAGAGUA-6DCI1oL_DOjBMgnMqGc5Qc';
+      const url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${apiKey}`;
+
+      const response = await axios.get(url);
+      if(response.data.results.length > 0){
+        var streetName = '';
+        var strt = '';
+        var number: number = null;
+        for (let result of response.data.results[0].address_components){
+          if (result.types.includes("locality")){
+            streetName = result.long_name;
+          }
+          if (result.types.includes('route')){
+            strt = result.short_name;
+          }
+          if (result.types.includes('street_number')){
+            number = result.short_name;
+          }
+        }
+
+        var final = '';
+
+        if (strt.length >1  && streetName != null){
+          final = strt + ', ' + number + ', ' +streetName;
+        }
+        else {
+          final = streetName;
+        }
+        setUserLocation(final);
+      }
+      // setUserLocation(`${latitude}, ${longitude}`);
+    } catch (error){
+      console.error('Failed while trying to fetch user location: ', error);
+      setUserLocation('Error fetching location');
+    }
+  }
 
   const filteredRestaurants: FeaturedRestaurant[] = featuredRestaurants.map((category) => ({
     ...category,
@@ -37,7 +93,7 @@ export default function HomeScreen(props: HomeProps) {
           />
           <View className="flex-row items-center space-x-1 border-0 border-l-2 pl-2 border-l-gray-300">
             <Icon.MapPin height="20" width="20" stroke="gray" />
-            <Text className="text-gray-600">Sarajevo, FBiH</Text>
+            <Text className="text-gray-600">{userLocation}</Text>
           </View>
         </View>
         <View className="p-3 rounded-full" style={{ backgroundColor: ThemeColors.bgColor(1) }}>
