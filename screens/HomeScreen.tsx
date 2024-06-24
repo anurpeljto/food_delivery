@@ -14,6 +14,14 @@ interface HomeProps {}
 
 export default function HomeScreen(props: HomeProps) {
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
+  const [searchQuery, setSearchQuery] = useState<string>('');
+
+  const filteredRestaurants: FeaturedRestaurant[] = featuredRestaurants.map((category) => ({
+    ...category,
+    restaurants: category.restaurants.filter((restaurant) =>
+      restaurant.name.toLowerCase().includes(searchQuery.toLowerCase())
+    ),
+  }));
 
   return (
     <SafeAreaView className="bg-white">
@@ -24,6 +32,8 @@ export default function HomeScreen(props: HomeProps) {
           <TextInput
             placeholder="Restaurants"
             className="ml-2 flex-1"
+            value={searchQuery}
+            onChangeText={setSearchQuery}
           />
           <View className="flex-row items-center space-x-1 border-0 border-l-2 pl-2 border-l-gray-300">
             <Icon.MapPin height="20" width="20" stroke="gray" />
@@ -39,7 +49,7 @@ export default function HomeScreen(props: HomeProps) {
         <Categories setActiveCategory={setActiveCategory} activeCategory={activeCategory}> </Categories>
 
         <View className="mt-5">
-          {featuredRestaurants.map((item: FeaturedRestaurant, index: number) => (
+          {filteredRestaurants.map((item: FeaturedRestaurant, index: number) => (
               <FeaturedRow
                 key={index.toString()} 
                 title={item.title}
