@@ -1,28 +1,28 @@
-import { View, Text, SafeAreaView } from 'react-native'
-import React from 'react'
-import { Image } from 'react-native'
+import { View, Text, SafeAreaView, ScrollView, TouchableOpacity } from 'react-native';
+import React from 'react';
 import * as Icon from 'react-native-feather';
-import { TouchableOpacity } from 'react-native';
 import { ThemeColors } from '../theme';
-import { useNavigation, useRoute } from '@react-navigation/native';
-import DishRow from '../components/DishRow';
+import { useNavigation } from '@react-navigation/native';
 import OrderedCard from '../components/OrderedCard';
-import { ScrollView } from 'react-native';
-import Cart from '../components/cart';
+import { useSelector } from 'react-redux';
+import { selectRestaurant } from '../slices/restaurantSlice';
+import { featuredRestaurants } from '../constants';
+import { RootState } from '../store/store';
+import { selectCartTotal } from '../slices/cartSlice';
+import { selectCartItems } from '../slices/cartSlice';
 
 export default function CartScreen() {  
-
-  // will make this screen take params later, once a DB or other form of data is implemented
-  // will also make cart component use a new variable that will be sent by the function to this screen, per each selected item
-  // based on that, this page will use .map or .forEach() to generate dynamic rows for each dish ordered.
-  // SAME TYPE/ORDER ITEMS WILL BE GROUPED: EX. Stuffed crust pizza x2
+  const restaurant = useSelector((state: RootState) => selectRestaurant(state));
   const navigation = useNavigation();
+  const cartItems = useSelector((state: RootState) => selectCartItems(state));
+  const cartTotal = useSelector((state: RootState) => selectCartTotal(state)); 
   return (
     <View style={{flex: 1}}>
         <SafeAreaView style={{backgroundColor: ThemeColors.bgColor(1)}}>
 
-        <View className="pb-10 flex-row justify-center items-center">
+        <View className="pb-10 flex-column justify-center items-center">
           <Text className="px-5 text-2xl font-bold text-white">Cart</Text> 
+          <Text className="px-5 text-1xl font-bold text-white">{restaurant.name}</Text> 
         </View>
         <TouchableOpacity className="absolute top-14 left-4 bg-gray-50 p-2 rounded-full" onPress={() => navigation.goBack()}>
             <Icon.ArrowLeft strokeWidth="3" stroke={ThemeColors.bgColor(1)} />
@@ -31,18 +31,16 @@ export default function CartScreen() {
 
         <ScrollView className="bg-white flex py-2 w-full h-full">
           <View className="flex py-2 bg-white-700">
-            <OrderedCard />
-            <OrderedCard />
-            <OrderedCard />
-            <OrderedCard />
-            <OrderedCard />
+            {cartItems.map(item => (
+              <OrderedCard key={item.id} item={item} />
+            ))}
           </View>
         </ScrollView>
 
         <View style={{backgroundColor: ThemeColors.bgColor(0.2), position: 'absolute', bottom: 0, left: 0, right: 0}} className="p-6 px-8 rounded-t-3xl space-y-1">
           <View className="flex-row justify-between">
             <Text className="text-gray-700 ">Price</Text>
-            <Text className="text-gray-700 ">100 KM</Text>
+            <Text className="text-gray-700 ">{cartTotal}</Text>
           </View>
 
           <View className="flex-row justify-between">
@@ -52,7 +50,7 @@ export default function CartScreen() {
 
           <View className="flex-row justify-between">
             <Text className="text-gray-700 text-xl font-extrabold">Total</Text>
-            <Text classname="text-gray-700 text-xl font-extrabold">2 KM</Text>
+            <Text className="text-gray-700 text-xl font-extrabold">{cartTotal} KM</Text>
           </View>
 
           <View>
