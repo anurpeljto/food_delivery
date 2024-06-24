@@ -96,9 +96,9 @@ export default function HomeScreen(props: HomeProps) {
             <Text className="text-gray-600">{userLocation}</Text>
           </View>
         </View>
-        <View className="p-3 rounded-full" style={{ backgroundColor: ThemeColors.bgColor(1) }}>
+        {/* <View className="p-3 rounded-full" style={{ backgroundColor: ThemeColors.bgColor(1) }}>
           <Icon.Sliders height="20" width="20" strokeWidth={2.5} stroke="white" />
-        </View>
+        </View> */}
       </View>
 
       <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 20 }}>
