@@ -3,15 +3,19 @@ import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
 import { ThemeColors } from '../theme/index';
 import RestaurantCard from './RestaurantCard';
 import { Restaurant } from '../constants/index';
+import { categories } from '../constants/index';
 import '../constants/index';
 
 interface FeaturedRowProps {
   title: string;
   description: string;
   restaurants: Restaurant[];
+  activeCategory: string | null;
 }
 
-const FeaturedRow: React.FC<FeaturedRowProps> = ({ title, description, restaurants }) => {
+const FeaturedRow: React.FC<FeaturedRowProps> = ({ title, description, restaurants, activeCategory }) => {
+  const filteredRestaurants = activeCategory ? restaurants.filter(restaurant => restaurant.category === activeCategory) : restaurants;
+
   return (
     <View className="">
       <View className="flex-row justify-between items-center px-4">
@@ -35,7 +39,7 @@ const FeaturedRow: React.FC<FeaturedRowProps> = ({ title, description, restauran
         }}
         className="overflow-visible py-5"
       >
-        {restaurants.map((restaurant, index) => (
+        {filteredRestaurants.map((restaurant, index) => (
           <RestaurantCard
             item={restaurant}
             key={index}

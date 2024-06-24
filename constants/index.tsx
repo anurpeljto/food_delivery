@@ -155,7 +155,7 @@ export type Dish = {
           dishes: [
             {
               id: 1,
-              name: 'burger',
+              name: 'Burgers',
               description: 'regular burger',
               price: 10,
               image: require('../assets/images/dishes/images (1) (1).jpeg'),
@@ -171,7 +171,7 @@ export type Dish = {
           reviews: 653,
           stars: 2.5,
           address: 'Bulevar Meše Selimovića 2c',
-          category: 'Pizza',
+          category: 'Burgers',
           dishes: [
               {
                   id: 1,
@@ -247,7 +247,7 @@ export type Dish = {
     },
     {
         id: 2,
-        name: 'Burger',
+        name: 'Burgers',
         image: require('../assets/images/categories/icons8-hamburger-96.png'),
     },
     {

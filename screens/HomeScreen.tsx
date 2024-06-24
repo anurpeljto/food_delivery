@@ -8,10 +8,13 @@ import { ThemeColors } from '../theme';
 import Categories from '../components/Categories';
 import { FeaturedRestaurant, featuredRestaurants } from '../constants';
 import FeaturedRow from '../components/featuredRow';
+import { useState } from 'react';
 
 interface HomeProps {}
 
 export default function HomeScreen(props: HomeProps) {
+  const [activeCategory, setActiveCategory] = useState<string | null>(null);
+
   return (
     <SafeAreaView className="bg-white">
       <StatusBar style="dark" />
@@ -33,7 +36,7 @@ export default function HomeScreen(props: HomeProps) {
       </View>
 
       <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 20 }}>
-        <Categories />
+        <Categories setActiveCategory={setActiveCategory} activeCategory={activeCategory}> </Categories>
 
         <View className="mt-5">
           {featuredRestaurants.map((item: FeaturedRestaurant, index: number) => (
@@ -42,6 +45,7 @@ export default function HomeScreen(props: HomeProps) {
                 title={item.title}
                 restaurants={item.restaurants}
                 description={item.description}
+                activeCategory={activeCategory}
               />
           ))}
         </View>
